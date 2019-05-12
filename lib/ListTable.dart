@@ -20,6 +20,10 @@ class ListTableState extends State<ListTable>
     m_ListTable = new List<MyTable>();
   }
   List<MyTable> m_ListTable = new List<MyTable>();
+  
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
   Widget _createListItem(BuildContext context, int index)
   {
     int _drinkCount=0 ;
@@ -31,8 +35,14 @@ class ListTableState extends State<ListTable>
     });
     return new InkWell( 
       onTap: (){
-        Route route = MaterialPageRoute(builder: (context) => TableDetail(m_ListTable[index]));
-        Navigator.of(context).push(route);
+        Navigator.of(context).push<MyTable>(new MaterialPageRoute(builder: (context){
+                     return new TableDetail(m_ListTable[index]);
+                     }))..then<MyTable>((onValue){
+                      if(onValue.m_IsPaid)
+                       {
+                          this.m_ListTable.remove(onValue);
+                       }
+                    });
       },
       child: new Container(
         padding: const EdgeInsets.all(10.0),
@@ -74,6 +84,7 @@ class ListTableState extends State<ListTable>
                     Navigator.of(context).push<MyTable>(new MaterialPageRoute(builder: (context){
                      return new TableDetail(m_ListTable[index]);
                      }))..then<MyTable>((onValue){
+                       print(onValue.m_TableID);
                       if(onValue?.m_OrderList!=null)
                        {
                           this.m_ListTable.remove(onValue);
@@ -98,9 +109,6 @@ class ListTableState extends State<ListTable>
       )
     );
   }
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
    int _itemCount = 0;
     if(this?.m_ListTable != null)
     {
@@ -118,6 +126,7 @@ class ListTableState extends State<ListTable>
                         int _drinkCount=0 ;
                         onValue.m_OrderList.forEach((drink,amount){
                           _drinkCount+=amount;
+                          print(amount);
                         });
                         if(_drinkCount > 0)
                           this.m_ListTable.add(onValue);

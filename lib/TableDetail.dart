@@ -139,7 +139,7 @@ class TableDetailState extends State<TableDetail>
                 onPressed:(){
                     Navigator.of(context).push<MyTable>(new MaterialPageRoute(builder: (context){
                      return new Menu(m_Table);
-                     }))..then<MyTable>((onValue){
+                     })).then<MyTable>((onValue){
                        if(onValue?.m_OrderList!=null)
                        {
                         m_Table = onValue; 
@@ -167,6 +167,7 @@ class TableDetailState extends State<TableDetail>
                     fontWeight: FontWeight.bold
                   ),),
                   onPressed: (){
+                    m_Table.m_IsPaid = true;
                     Navigator.of(context).pop(m_Table);
                   },
                   color: Colors.green,

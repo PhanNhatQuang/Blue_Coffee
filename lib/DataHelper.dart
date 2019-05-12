@@ -29,6 +29,7 @@ class MyTable{
   int m_TableID;
   Map<Drink,int> m_OrderList;
   DateTime m_Date;
+  bool m_IsPaid;
   MyTable(int id)
   {
     this.m_TableID = id;
